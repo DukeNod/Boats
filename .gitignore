@@ -1,0 +1,9 @@
+/.internals/config.php
+/.redirects/admin/.htaccess
+/uploads/
+/.vscode/
+/linked
+/.idea/
+/files/
+/debug.log
+/.internals/files/debug.log

@@ -1,0 +1,6 @@
+#Order Allow,Deny
+#Allow from 127.0.0.
+#Allow from 192.168.0.
+#Allow from 193.22.88.134
+#Allow from 62.113.86.
+#Allow from 195.2.72.

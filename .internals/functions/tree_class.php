@@ -1,0 +1,176 @@
+<?php
+// Класс для работы с простыми деревьями
+// ToDo: Переписать, чтоб хранил дерево в себе и передавался как объект.
+// Version 2.1 (Бинарный поиск. Требует сортировки по parent)
+
+Class Tree
+{
+	var $id_field;
+	var $parent_field;
+	var $childs_field;
+
+	function Tree($id_field='id',$parent_field='parent',$childs_field='childs')
+	{		
+		$this->id_field=$id_field;
+		$this->parent_field=$parent_field;
+		$this->childs_field=$childs_field;
+	}
+
+	function findid(&$tree,$id){
+		if (is_array($tree)){
+			foreach($tree as $f=>$v){
+				if ($v[$this->id_field]==$id) return $v;
+				elseif(is_array($v[$this->childs_field])){
+					if ($ret=$this->findid($tree[$f][$this->childs_field],$id))
+						return $ret;
+				}
+			}
+		}
+		return false;
+	}
+
+	function RemoveId(&$tree,$id){
+		if (is_array($tree)){
+			foreach($tree as $f=>&$v){
+				if ($v[$this->id_field]==$id) {unset($tree[$f]); return true;}
+				elseif(is_array($v[$this->childs_field])){
+					if ($ret=$this->RemoveId($tree[$f][$this->childs_field],$id))
+						return $ret;
+				}
+			}
+		}
+		return false;
+	}
+
+	function RecFind(&$cat,$where,$what){
+		if (is_array($cat))
+			foreach($cat as $f=>$v){
+				if ($v[$where]==$what) return $v;
+				if ($ret=$this->RecFind($cat[$f][$this->childs_field],$where,$what));
+					return $ret;
+			}
+		return false;
+	}
+
+	function &findkey(&$tree, $key, $val)
+	{
+		if (is_array($tree))
+		{
+			foreach($tree as $f=>&$v)
+			{
+				if ($v[$key]==$val) return $v;
+				elseif(is_array($v[$this->childs_field]))
+				{
+					if ($ret=$this->findkey($tree[$f][$this->childs_field],$key,$val))
+						return $ret;
+				}
+			}
+		}
+		return false;
+	}
+
+	function GetFields(&$tree,$field)
+	{
+		$rez = array();
+
+		if (is_array($tree))
+		{
+			foreach($tree as $f=>&$v)
+			{
+				if (isset($v[$field])) $rez[] = $v[$field];
+				if(is_array($v[$this->childs_field]))
+				{
+					if ($ret = $this->GetFields($v[$this->childs_field], $field))
+						$rez = array_merge($rez,$ret);
+				}
+			}
+		}
+		
+		return $rez;
+	}
+
+	function FindParents(&$tree,$id){
+		if (is_array($tree)){
+			foreach($tree as $f=>$v){
+				if ($v[$this->id_field]==$id) return array($f);
+				elseif(is_array($v[$this->childs_field])){
+					if ($tmp=$this->FindParents($tree[$f][$this->childs_field],$id)){
+						$ret=array($f);
+						return array_merge($ret,$tmp);
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	function make(&$dat,$parent=0,$level=0,$key=null){
+		$ret=null;
+		if (is_array($dat)){
+			if ($key===null){
+				reset($dat);
+				$tmp=key($dat);
+				$p=strpos($tmp,":");
+
+				if ($p!==false) {
+					$key=substr($tmp,0,$p+1);
+				}else $key="";
+			}
+
+
+			$start = $t = $this->bin_search($dat, $this->parent_field, $parent, $key);
+
+			if ($start !== false)
+			{
+
+			for($i=$t;$i>=0;$i--)
+			{
+				if ($dat[$key.$i][$this->parent_field]==$parent)
+				{
+					$start = $i;
+				}
+				else break;
+			}
+
+			$j=0;
+
+			for($i=$start;$i<count($dat);$i++)
+			{
+				$f=$key.$i;
+
+				if ($dat[$f][$this->parent_field]==$parent){
+					$ret[$key.$j]=$dat[$f];
+					$ret[$key.$j]['@level']=$level;
+					$ret[$key.$j][$this->childs_field]=$this->make($dat,$dat[$f][$this->id_field],$level+1,$key);
+					$j++;
+				}
+				else break;
+			}
+			}
+		}
+		return $ret;
+	}
+
+	function bin_search(&$A, $key, $value, $key_name)
+	{
+	        if (!count($A)) return false;
+
+	        $l = 0; $u = count($A)-1;
+
+		while(1)
+		{
+		    $m = round(($l + $u)/2);
+		    if ($value < $A[$key_name.$m][$key])
+		    {
+			$u = $m - 1;
+		    }elseif ($value > $A[$key_name.$m][$key])
+		    {
+			$l = $m + 1;
+		    }else
+			return $m;
+
+		    if ($l > $u) return false;
+    		}
+	}
+}
+?>

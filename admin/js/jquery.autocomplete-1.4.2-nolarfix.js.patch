@@ -1,0 +1,10 @@
+--- jquery.autocomplete-1.4.2.js	Fri Mar 21 16:04:07 2008
++++ jquery.autocomplete-1.4.2-nolarfix.js	Fri Mar 21 16:03:56 2008
+@@ -262,7 +262,6 @@
+           }
+           // call AJAX get
+           else if($.isFunction(options.ajax_get)){
+-            clearSuggestions();
+             showLoadingTimer = setTimeout(show_loading,options.delay);
+             options.ajax_get(val,ajax_continuation);
+           }

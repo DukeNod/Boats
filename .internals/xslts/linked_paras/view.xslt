@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='cp1251' ?>
+<!DOCTYPE xsl:stylesheet [
+	<!ENTITY % HTMLlat1    PUBLIC "-//W3C//ENTITIES Latin 1 for XHTML//EN" "../../dtds/xhtml-lat1.ent"   > %HTMLlat1;
+	<!ENTITY % HTMLspecial PUBLIC "-//W3C//ENTITIES Special for XHTML//EN" "../../dtds/xhtml-special.ent"> %HTMLspecial;
+	<!ENTITY % HTMLsymbol  PUBLIC "-//W3C//ENTITIES Symbols for XHTML//EN" "../../dtds/xhtml-symbol.ent" > %HTMLsymbol;
+]>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
+
+
+
+<xsl:template name="view_for_linked_para">
+	<xsl:param name="form"   select="/.."/>
+	<xsl:param name="back"   select="/*/system/back_raw"/>
+	<xsl:param name="action" select="/*/system/curr_raw"/>
+	<xsl:param name="button"     select="/.."/>
+	<xsl:param name="button_w"   select="/.."/>
+	<xsl:param name="button_h"   select="/.."/>
+	<xsl:param name="button_img" select="/.."/>
+	<xsl:param name="button_alt" select="/.."/>
+	<xsl:param name="prefix"     select="'_'"/>
+
+	<form class="form" enctype="multipart/form-data" method="post" action="{$action}">
+		<table class="formTable">
+			<col width="1"/><col width="1"/><col width="*"/>
+
+		<xsl:if test="$form/errors/*">
+			<tr class="formRowErrors">
+				<th class="formCellHead"></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellErrors">
+					<xsl:apply-templates select="$form/errors/*" mode="div"/>
+				</td>
+			</tr>
+			<tr class="formRowSpace"><th class="formCellSpace"></th><td class="formCellSpace"></td><td class="formCellSpace"></td></tr>
+		</xsl:if>
+
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>№п/п</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:value-of select="$form/data/position"/>
+				</td>
+			</tr>
+
+			<tr class="formRowSpace"><th class="formCellSpace"></th><td class="formCellSpace"></td><td class="formCellSpace"></td></tr>
+			
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Обтекание параграфа</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:choose>
+					<xsl:when test="$form/data/clear='default'">По умолчанию </xsl:when>
+					<xsl:when test="$form/data/clear='both'   ">Сбросить с обеих сторон</xsl:when>
+					<xsl:when test="$form/data/clear='left'   ">Сбросить слева, разрешить справа</xsl:when>
+					<xsl:when test="$form/data/clear='right'  ">Сбросить справа, резрешить слева</xsl:when>
+					<xsl:when test="$form/data/clear='none'   ">Разрешить полностью</xsl:when>
+					<xsl:otherwise><xsl:value-of select="$form/data/clear"/></xsl:otherwise>
+					</xsl:choose>
+				</td>
+			</tr>
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Выравнивание текста</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:choose>
+					<xsl:when test="$form/data/align='default'">По умолчанию </xsl:when>
+					<xsl:when test="$form/data/align='left'   ">Влево        </xsl:when>
+					<xsl:when test="$form/data/align='right'  ">Вправо       </xsl:when>
+					<xsl:when test="$form/data/align='center' ">По центру    </xsl:when>
+					<xsl:when test="$form/data/align='justify'">По ширине    </xsl:when>
+					<xsl:otherwise><xsl:value-of select="$form/data/align"/></xsl:otherwise>
+					</xsl:choose>
+				</td>
+			</tr>
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Заголовок</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:value-of select="$form/data/name" disable-output-escaping="yes"/>
+				</td>
+			</tr>
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Текст</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:value-of select="$form/data/text" disable-output-escaping="yes"/>
+				</td>
+			</tr>
+
+			<tr class="formRowSpace"><th class="formCellSpace"></th><td class="formCellSpace"></td><td class="formCellSpace"></td></tr>
+
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Положение изображения</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:choose>
+					<xsl:when test="$form/data/float='above_center'">По центру над текстом         </xsl:when>
+					<xsl:when test="$form/data/float='above_left'  ">Слева над текстом             </xsl:when>
+					<xsl:when test="$form/data/float='above_right' ">Справа над текстом            </xsl:when>
+					<xsl:when test="$form/data/float='below_center'">По центру под текстом         </xsl:when>
+					<xsl:when test="$form/data/float='below_left'  ">Слева под текстом             </xsl:when>
+					<xsl:when test="$form/data/float='below_right' ">Справа под текстом            </xsl:when>
+					<xsl:when test="$form/data/float='float_left'  ">Влево  (текст обтекает справа)</xsl:when>
+					<xsl:when test="$form/data/float='float_right' ">Вправо (текст обтекает слева) </xsl:when>
+					<xsl:when test="$form/data/float='table_left'  ">Влево  (текст колонкой справа)</xsl:when>
+					<xsl:when test="$form/data/float='table_right' ">Вправо (текст колонкой слева) </xsl:when>
+					<xsl:otherwise><xsl:value-of select="$form/data/float"/></xsl:otherwise>
+					</xsl:choose>
+				</td>
+			</tr>
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Комментарий</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:value-of select="$form/data/alt" disable-output-escaping="yes"/>
+				</td>
+			</tr>
+
+		<xsl:if test="($form/data/small_temp!='') or ($form/data/small_file!='')">
+			<tr class="formRowSpace"><th class="formCellSpace"></th><td class="formCellSpace"></td><td class="formCellSpace"></td></tr>
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Маленькая картинка</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:call-template name="media">
+						<xsl:with-param name="src">
+							<xsl:choose>
+							<xsl:when test="$form/data/small_temp!=''"><xsl:value-of select="concat(/*/system/info/adm_to_tmp_for_linked, $form/data/small_temp)"/></xsl:when>
+							<xsl:when test="$form/data/small_file!=''"><xsl:value-of select="concat(/*/system/info/adm_to_dir_for_linked, 'paras/small/', $form/data/uplink_type, '/', $form/data/uplink_id, '/', $form/data/small_file)"/></xsl:when>
+							</xsl:choose>
+						</xsl:with-param>
+					</xsl:call-template>
+				</td>
+			</tr>
+		</xsl:if>
+
+		<xsl:if test="($form/data/large_temp!='') or ($form/data/large_file!='')">
+			<tr class="formRowSpace"><th class="formCellSpace"></th><td class="formCellSpace"></td><td class="formCellSpace"></td></tr>
+			<tr class="formRowView">
+				<th class="formCellHead"><nobr>Большая картинка</nobr></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellData">
+					<xsl:call-template name="media">
+						<xsl:with-param name="src">
+							<xsl:choose>
+							<xsl:when test="$form/data/large_temp!=''"><xsl:value-of select="concat(/*/system/info/adm_to_tmp_for_linked, $form/data/large_temp)"/></xsl:when>
+							<xsl:when test="$form/data/large_file!=''"><xsl:value-of select="concat(/*/system/info/adm_to_dir_for_linked, 'paras/large/', $form/data/uplink_type, '/', $form/data/uplink_id, '/', $form/data/large_file)"/></xsl:when>
+							</xsl:choose>
+						</xsl:with-param>
+					</xsl:call-template>
+				</td>
+			</tr>
+		</xsl:if>
+
+		<xsl:if test="$button or $button_alt!='' or $button_img!=''">
+			<tr class="formRowSpace"><th class="formCellSpace"></th><td class="formCellSpace"></td><td class="formCellSpace"></td></tr>
+			<tr class="formRowCommands">
+				<th class="formCellHead"></th>
+				<td class="formCellFlag"></td>
+				<td class="formCellCommands">
+					<table class="flatTable"><tr class="flatRow">
+						<td class="flatCell">
+							<button class="inlineButton" type="submit">
+								<xsl:copy-of select="$button"/>
+								<xsl:if test="not($button)">
+									<xsl:attribute name="style">width: <xsl:value-of select="$button_w"/>px; height: <xsl:value-of select="$button_h"/>px;</xsl:attribute>
+									<img src="{/*/system/info/adm_root}img/buttons/submit_{$button_img}.gif" width="{$button_w}" height="{$button_h}" alt="{$button_alt}"/>
+								</xsl:if>
+							</button>
+						</td>
+					</tr></table>
+				</td>
+			</tr>
+		</xsl:if>
+
+		</table>
+		<input type="hidden" name="back" value="{$back}"/>
+	</form>
+</xsl:template>
+
+
+
+</xsl:stylesheet>

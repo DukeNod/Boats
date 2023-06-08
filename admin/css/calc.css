@@ -1,0 +1,17 @@
+﻿.formCellSpace .layoutSubTitle {
+	text-align: left;
+	margin-top: 0;
+	font-size: 15pt;
+}
+input[type="radio"] {
+	cursor: pointer;
+}
+.inlineButton {
+	width: 96px;
+	height: 23px;
+	border: 1px solid #aaa;
+	background-image: linear-gradient(to top, #ccc, #fff);
+}
+#question-a6-main input {
+	margin-bottom: 10px;
+}

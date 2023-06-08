@@ -1,0 +1,103 @@
+         	
+# Самая главная рюшечка.
+RewriteEngine On
+
+# Защита картинок методом нанесения логотипа. Технически это делается через скрипт с генерацией контента-картинки,
+# а собой покрывает стандартный url картинки, в результате чего напрямую она недоступна; да и отключение системы
+# наложения логотипа не потребует смены url'ов (абсолютная прозрачность).
+# NB: Должно идти ДО обработки прочего статичного контента.
+# NB: Флага [L] нет и не надо, потому что мы отсюда продолжаем вплоть до отсева рекурсии или -f, как будто так и запрошено.
+#RewriteCond	%{REQUEST_FILENAME} -f
+#RewriteRule	^linked/(picts/small/item/.*)$ .redirects/public/index.php/logotype/$1 [NC,L]
+#RewriteCond	%{REQUEST_FILENAME} -f
+#RewriteRule	^linked/(picts/middle/item/.*)$ .redirects/public/index.php/logotype/$1 [NC,L]
+#RewriteCond	%{REQUEST_FILENAME} -f
+#RewriteRule	^linked/(picts/large/item/.*)$ .redirects/public/index.php/logotype/$1 [NC,L]
+
+#RewriteCond	%{REQUEST_FILENAME} -f
+#RewriteRule	^linked/(files/attach/item_teh/.*)$ .redirects/public/index.php/checkaccess/$1 [NC,L]
+
+RewriteRule	^linked/(picts/(\d+)/(\d+)/.*)$ .redirects/public/index.php/resize/$1 [NC,L]
+
+# Для скорости, весь статичный контент (картинки, стили, скрипты, файлы и пр.) имеет смысл рубить [L] тут,
+# чтоб оно даже не пыталось проверяться на -f, ибо для него должны быть такие критерии отбора, что он априорно
+# предполагается наличествующим (а то если его нет, то он пойдёт через скриптовое ядро, и это лишняя нагрузка).
+# NB: Должно идти ДО проверок -f и проброса на /.redirects/
+
+RewriteRule	^linked.tmp/(.*)$	- [NC,L]
+RewriteRule	^linked/(.*)$		- [NC,L]
+RewriteRule	^picts/(.*)$		- [NC,L]
+RewriteRule	^c/(.*)$		- [NC,L]
+RewriteRule	^js/(.*)$		- [NC,L]
+RewriteRule	^dsn/(.*)$		- [NC,L]
+RewriteRule	^i/(.*)$		- [NC,L]
+RewriteRule	^xml/(.*)$		- [NC,L]
+RewriteRule	^rc/(.*)$		- [NC,L]
+RewriteRule	^crypto/(.*)$		- [NC,L]
+RewriteRule	^test-dsig/(.*)$	- [NC,L]
+RewriteRule	^admin/css/(.*)$	- [NC,L]
+RewriteRule	^admin/img/(.*)$	- [NC,L]
+RewriteRule	^admin/ext/(.*)$	- [NC,L]
+RewriteRule	^admin/js/(.*)$		- [NC,L]
+RewriteRule	^search/(.*)$		- [NC,L]
+RewriteRule	^47/(.*)$		- [NC,L]
+RewriteRule	^48/(.*)$		- [NC,L]
+RewriteRule	^favicon\.ico	- [NC,L]
+
+
+#RewriteRule ^(.+)$ /%{REQUEST_URI} [E=MYFLAG:1,L]
+
+# Исключаем из дальнейшего переписывания то, что мы уже направили в скриптовое ядро.
+# Оно, конечно, и само бы отсеялось на -f, но на всякий случай отсеиваем принудительно (а то вдруг файла не будет).
+# NB: Должно идти ДО проверок -f и проброса в /.redirects/
+# NB: Должно идти ПОСЛЕ реврайта перекрываемого контента (то есть который со статических урлов маппится в скриптовые).
+# NB: Расположение относительно отсева статического контента несущественно (можно ДО или ПОСЛЕ).
+#RewriteRule	^.redirects/.*		- [NC,L]
+
+# Исключаем из дальнейшего переписывания все реально существующие файлы и папки.
+# (*) из-за -d сразабывает на /admin/ как на папку (в ней css&js), а не как на корневой модуль; так что оно было отключено.
+#RewriteCond	%{REQUEST_FILENAME}	-d [OR]
+RewriteCond	%{REQUEST_FILENAME}	-f
+RewriteRule	^(.+)			- [NC,L,PT]
+
+RewriteRule ^(sitemap.xml)$		.redirects/public/index.php/sitemap	[NC,L,NS]
+
+#RewriteCond %{ENV:REDIRECT_MYFLAG}	^$
+#RewriteCond %{HTTP_HOST}		^(www\.){0,1}(.+)\.gemma\.[^\.]+$
+#RewriteRule ^(.*)$			.redirects/public/index.php/$1?domain=%2	[E=MYFLAG:1,QSA,L]
+
+#RewriteCond %{ENV:REDIRECT_MYFLAG}	^$
+#RewriteCond %{HTTP_HOST}		^(www\.){0,1}(.+)\.gemma\.[^\.]+$
+#RewriteRule ^domain/([^/]+)/(.*)$		.redirects/public/index.php/$2?domain=$1	[E=MYFLAG:1,QSA,L]
+
+
+# Переписываем доступы к разным разделам сайта, которые по-разному обрабатываются и конфигурируются.
+# До сего момента мы уже отсеяли весь статический контент всех видом, а также все рекурсивные подзапросы,
+# так что заведомо полагаем что то, что осталось - это некий модуль ядра; передаётся в точку входа через pathinfo.
+RewriteRule	^(admin(/.*|$))		.redirects/admin/index.php$2	[NC,L,NS]
+#RewriteRule	^(maint(/.*|$))		.redirects/maint/index.php$2	[NC,L,NS]
+RewriteRule	^(api(/.*|$))		.redirects/api/index.php$2	[NC,L,NS]
+#RewriteRule	^(.*)			.redirects/public/index.php/$1	[NC,L,NS]
+RewriteRule	^(.+)/$			.redirects/public/index.php/$1/	[NC,L,NS]
+RewriteRule	^(.+)$			http://%{HTTP_HOST}/$1/ [R=301,L,NE]
+RewriteRule	^$			.redirects/public/index.php	[NC,L,NS]
+
+Options -Indexes +FollowSymLinks
+DirectoryIndex index.php index.htm
+
+php_flag  magic_quotes_gpc		off
+php_flag  session.use_trans_sid		off
+php_value include_path			"."
+php_value display_errors		1
+php_value track_errors			1
+php_value upload_max_filesize		500M
+php_value post_max_size		500M
+php_flag allow_url_fopen		1
+php_value session.gc_maxlifetime	172800
+
+#AddOutputFilterByType DEFLATE text/html text/plain text/xml text/javascript application/x-javascript text/css application/rss+xml
+AddType text/x-component htc
+AddDefaultCharset utf-8
+<Files *.csv>
+ForceType text/x-comma-separated-values
+</Files>

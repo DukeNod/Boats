@@ -1,0 +1,365 @@
+/* Basic typographic and tags' parameters */
+html, body, form		{ margin: 0; padding: 0; }
+body				{ color: #000000; font-family: Verdana, Arial, sans-serif; font-size: 9pt; }
+a img				{ border: none; }
+table				{ border: none; border-collapse: collapse; }
+
+
+/* Hyperlinks' appearance and visual behavior */
+a, a:active, a:visited, a:hover { color: #23539D; }
+a				{ text-decoration: none; }
+a:hover				{ text-decoration: underline; }
+a.shy				{ text-decoration: underline; }
+a.shy:hover			{ text-decoration: none; }
+
+
+/* Simulation of one elements/controls with use of others (buttons that look like links, links that look like buttons, etc) */
+.inlineCheckbox			{ margin: 0; padding: 0; border: none; }
+.inlineButton			{ margin: 0; padding: 0; border: none; background: transparent; cursor: pointer; display: inline; }
+.inlineButton img		{ margin: 0; padding: 0; border: none; }
+
+
+/* Special markup solution (work-around) for a row of aligned heterogenic elements (buttons, inputs, etc). */
+.flatTable, table.flat		{ margin: 0; padding: 0;}
+.flatRow, tr.flat		{ }
+.flatCell, td.flat, th.flat	{ margin: 0; padding: 0; vertical-align: top; text-align: left; height: 20px; }
+
+.flatCell, td.insertLine	{ vertical-align: middle; height: 26px; }
+
+
+/* Common (every-page) layout */
+body				{ background: #FFFFFF; padding: 11px 15px 11px 15px; }
+.layoutHeader			{ background: #23539D; width: 100%; font-size: 18px; }
+body				{ background: url(../img/top-gradient.gif)      repeat-x  left  top   ; }
+.layoutHeaderRounderTL		{ background: url(../img/header-rounder-tl.gif) no-repeat left  top   ; }
+.layoutHeaderRounderTR		{ background: url(../img/header-rounder-tr.gif) no-repeat right top   ; }
+.layoutHeaderSection		{ background: url(../img/top-gear.gif)          no-repeat 16px  17px  ; width: auto; padding: 18px 16px 12px 50px; }
+.layoutHeaderSiteURL		{ background: url(../img/header-rounder-bc.gif) no-repeat left  bottom; width:  1px; padding: 18px 32px 12px 44px; }
+.layoutHeaderDivision		{ width: 100%; }
+.layoutHeader			{ color: #FFFFFF; }
+.layoutHeader a			{ color: #FFFFFF; }
+.layoutBody			{ padding: 0 20px 0 20px; font-weight: normal; }
+.layoutContext			{ margin:  0px 0  0px 0; float: right; width: 222px; margin-top: 100px; right: 20px; z-index: -1; background-color: #fff; position: absolute; }
+.layoutContext:hover		{ z-index: 1;}
+.layoutContext1			{ margin:  0px 0  0px 0; float: right; width: 222px; position: absolute; top: 600px; left: 700px; }
+.layoutLocator			{ margin: 18px 0 26px 0; }
+.layoutTitle			{ margin: 26px 0 23px 0; font-size: 16pt; color: #23539D; font-weight: normal; }
+.layoutSubTitle			{ margin: 36px 0 20px 0; font-size: 16pt; color: #23539D; font-weight: normal; }
+.layoutContent			{ margin:  0px 222px  0px 0; float: left; }
+
+
+/* Main menu (both initial page and every page right pad) */
+.menu				{ margin-left: 30px; margin-bottom: 25px; }
+.menuList			{ padding: 0; margin: 0; list-style-position: outside; }
+.menuLine			{ content: '\00A0'; }
+.menuLine, .menuHead		{ list-style-type:   none; list-style-image: none; }
+.menuLink			{ list-style-type:   disc; list-style-image: url(../img/list-normal.gif); }
+.menuThis			{ list-style-type: circle; list-style-image: url(../img/list-active.gif); }
+.menuThis a			{ color: #000000; }
+.menuHead			{ color: #000000; }
+.layoutContext .menuList	{ color: #999999; }
+
+
+/* Path selector (every page, except initial one) */
+.path				{}
+.pathSeparator			{ padding-left: 1ex; padding-right: 1ex; }
+.pathThis			{}
+.pathLink			{}
+.pathLink a			{}
+
+
+/* Typical lists of records and their smart formatting */
+.list				{ margin-left: 0px; margin-bottom: 10px; }
+.listEmpty			{ color: #8B0000; font-style: italic; }
+
+.listTable			{ }
+.listRowHead			{ background: #C8DDED; color: #23539D; }
+.listRowFoot			{ background: #C8DDED; color: #23539D; }
+.listRowNull			{ height: 5px; }
+.listRowData			{ }
+.listRow1			{ background: #EAF2FA; }
+.listRow2			{ background: #FFFFFF; }
+.listRowFirst			{ }
+.listRowLast			{ }
+.listCellHead			{ vertical-align:    top; padding: 10px 7px 8px 7px; border-right: solid 2px #FFFFFF; font-weight: normal; }
+.listCellFoot			{ vertical-align:    top; padding: 10px 7px 8px 7px; border-right: solid 2px #FFFFFF; font-weight: normal; }
+.listCellData			{ vertical-align:    top; padding:  5px 7px 6px 7px; border-right: solid 2px #FFFFFF; font-weight: normal; }
+.listCellLink			{ vertical-align: middle; padding:  0px 0px 0px 0px; text-align: center; width: auto; width: 20px; height: 20px; }
+.listCellLink img		{ font-size: 75%; } /* for img.alt in command buttons */
+.listCellMergeL			{ border-left : none; }
+.listCellMergeR			{ border-right: none; }
+.listCellSplitL			{ border-left : solid 2px #FFFFFF; }
+.listCellSplitR			{ border-right: solid 2px #FFFFFF; }
+
+.listEdit			{ vertical-align: middle; padding:  5px 7px 6px 7px; font-weight: normal; }
+
+.listBlock			{}
+.listRowSpace			{}
+.listRowLinks			{}
+.listRowViews			{}
+.listCellSpace			{ height: 1em; }
+.listCellEmpty			{}
+.listCellPosition		{ font-weight: bold; padding-right: 10px; text-align: right; vertical-align: middle; }
+.listCellLinks			{ vertical-align: top; text-align: left; }
+.listCellView			{ border: dashed 1px #cccccc; width: 100%; }
+.listCellImage			{ width: 1px; background: #EAF2FA; vertical-align: middle; text-align: center; padding: 5px;}
+
+
+
+/* Typical commands right above and right below lists of records */
+.link				{ margin-left: 30px; margin-bottom: 15px; }
+.linkCommand			{ }
+.linkCommand img		{ vertical-align: middle; margin-right: 1em; }
+.linkCommand span		{ }
+
+.pager				{ margin-bottom: 15px; }
+.pagerTitle			{ color:#23539D; }
+.pagerThis			{ font-weight: bold; }
+/*.pagerLink			{ }*/
+
+/* Typical forms for operations and for filters' criterias (sic!) */
+.form				{ margin-left: 30px; margin-top: 0; margin-bottom: 25px; display: block; }
+.formTable			{ }
+.formRowErrors			{ }
+.formRowOptional		{ }
+.formRowRequired		{ }
+.formRowFallback		{ }
+.formRowInformal		{ }
+.formRowCommands		{ }
+.formRowCriteria		{ }
+.formRowSpace			{ }
+.formRowView			{ }
+.formGroupHead			{ vertical-align: top; text-align:  left; padding: 3px 0px 3px 0px; color: #23539D; padding-right: 24px; }
+.formCellWarnings		{ color: #f60; }
+.formCellErrors			{ }
+.formCellSpace			{ height: 1em; }
+.formCellHead			{ vertical-align: top; text-align:  left; padding: 3px 0px 3px 0px; color: #23539D; font-weight: normal; padding-right: 24px; }
+.formCellData			{ vertical-align: top; text-align:  left; padding: 3px 0px 3px 0px; }
+.formCellFlag			{ vertical-align: top; text-align: right; padding: 3px 1ex 3px 0px; font-weight: bold; }
+.formCellHint			{ font-size: 80%; color: gray; padding-left: 20px; line-height: 90%; background: url(../img/child.gif) left 1px no-repeat; }
+.formCellControls		{ vertical-align: top; text-align:  left; padding: 0px 0px 6px 0px; }
+.formCellControl		{ text-align:  left; }
+.formCellCommands		{ }
+.formRowRequired .formCellFlag	{ color: red; font-size: 120%; line-height: 75%; padding-top: 5px; }
+.formRowRecovery .formCellFlag	{ color: darkgrey; color: red; }
+.formRowRecovery .formCellHead	{ color: darkgrey; font-style: italic; }
+.formRowRecovery input		{ background: #ffcccc; }
+
+
+
+
+.controlOptionGroup		{ background: lightgrey; }
+.controlHint			{ margin-left: 1ex; margin-right: 1ex; color: gray; }
+
+.controlAttach,
+.controlString,
+.controlEmail,
+.controlNumber,
+.controlSelect,
+.controlDateOnly,
+.controlDateTime,
+.controlCheckBox,
+.controlButton		{ border: solid 1px #7a96c9; margin: 0; padding: 0;
+				scrollbar-face-color: #7a96c9;
+				scrollbar-highlight-color: #7a96c9;
+				scrollbar-shadow-color: #eff5ff;
+				scrollbar-3dlight-color: #eff5ff;
+				scrollbar-arrow-color: #eff5ff;
+				scrollbar-track-color: #eff5ff;
+				scrollbar-darkshadow-color: #eff5ff;
+			}
+.controlAttach		{ width: 40em; }
+.controlString		{ width: 40em; }
+.controlDateOnly	{ width: 10em; }
+.controlDateTime	{ width: 10em; }
+.controlNumber		{ width:  5em; }
+.controlSize		{ width:  3em; }
+.controlEmail		{ width: 20em; }
+.controlSelect		{ font-size: 10px; }
+.controlSelectGroup	{ background: #dddddd; }
+.controlButton2		{ padding: 0 1ex 0 1ex; background: #ebe9ed; margin-right: 1ex; cursor: default; }
+
+
+
+.inlineCalendar			{ margin-left: 5px; }
+.nojsCalendar			{ margin-left: 1ex; }
+.nojs				{}
+
+
+.error				{ color: red; font-weight: normal; line-height: 75%; margin-top: 5px; }
+.ajax				{ font-size: 75%; color: gray; text-align: left; line-height: 75%; }
+.ajax				{ padding: 0; margin: 0; border: 0; z-index: 1; position: absolute; }
+
+.keyboard			{ margin-left: -3px; border: solid 1px lightgrey; }
+.keyboardBox			{ background: white; font-size: 12px; border-left: solid 2px white; border-top: solid 2px white;}
+.keyboardKey			{ background: #C8DDED; width: 15px; height: 15px; text-align: center; vertical-align: middle; cursor: pointer; border-right: solid 2px white; border-bottom: solid 2px white;}
+.keyboardKeyText		{ display: none; }
+.keyboardKeyHint		{ display: none; }
+.keyboardKeyHkey		{ display: none; }
+.keyboardHint			{ font-size: 10px; }
+
+.contextLine			{ background: #EAF2FA; padding: 10px; color: #2D5D9F; display: block; margin-top: 5px; margin-bottom: 5px; margin-left: 10px; }
+
+/*!!! remove
+.forumTreeMarker		{ background-image: url(../img/forum_child_arrow.gif); background-position: left top; background-repeat: no-repeat; }
+*/
+.sizes td, .sizes th { padding: 3px; border: 1px solid #23539D; }
+.sizes th { font-weight: bold; }
+
+.b-tabs {
+	margin-top:40px;
+	width: 100%;	
+}
+
+.b-tabs ol, .b-tabs ul, .b-tabs li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+.b-tabs h2 {
+	font-weight:normal;
+}
+
+.b-tabs ol, .b-tabs ul {
+	list-style: none;
+}
+
+	
+	.b-tabs ul.tabs {
+		margin-bottom:3px;
+		display:block;
+	}
+		.b-tabs .tabs .tab {
+			float:left;
+			border-right:#fff 2px solid;
+			color:#23539D;
+			font-size:12px;
+			font-weight:normal;
+			z-index:1;
+			cursor:pointer;
+			background:#C8DDED;
+			height: 40px;
+		}
+			.b-tabs .tabs .tab h2 {
+				display:block;
+				height:19px;
+				padding: 10px 25px;
+				font-weight:normal;
+				margin: 0;
+				border:#fff 1px solid; /* #23539D */
+			}
+		.b-tabs .tabs .active {
+			color:#23539D;
+			cursor:auto;
+			background:#fff;
+		}
+			.b-tabs .tabs .active h2 {
+				color:#23539D;
+				position:relative;
+				height:26px;
+				padding-top:6px;
+				margin-top:-4px;
+				margin-right:-4px;
+				border:#C8DDED 1px solid; /*#23539D*/
+				border-width:1px 1px 0 1px;
+				background:#fff;
+				z-index:200;
+			}
+	.b-tabs .tab-pad {
+		position:relative;
+		padding:15px 19px 19px;
+		margin-top:15px;
+		/* border:#4A5857 1px solid;*/
+		z-index:100;
+	}
+
+.m-hidden {
+	display:none;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	display: block;
+}
+
+#ImageBoxOverlay {
+	background-color: #000000;
+	position: absolute; top: 0pt; left: 0pt; opacity: 0.8; display: none;
+	z-index: 5;
+}
+
+.popup_window {
+	position: absolute; top: 0pt; 
+	/*
+	left: 0pt;
+	width: 680px;
+	*/
+	display: none;
+/*	left: 50%;*/
+	z-index: 20;
+	background-color: #fff;
+	overflow: hidden;
+}
+
+.popup_window .popup_content{
+	/*width: 790px;
+	height: 570px;*/
+        position: relative;
+	margin: 25px;
+}
+
+.close_img {
+	float: right;
+	cursor: pointer;
+}
+
+.ajax-loader {
+        position: relative;
+/*	left: 379px;*/
+/*	top: 269px;*/
+}
+
+.dragHandle {
+	cursor: move;
+}
+.myDragClass {
+	background: #CCC; /*#EAF2FA;*/
+}
+
+#listTableHide{
+	display: none;
+	position: absolute; 
+	z-index: 5;
+	background-color: #fff;
+	opacity: 0.8;
+}
+
+.field_comment {
+	font-size: 90%;
+	color: #777;
+}
+
+.cardRow:hover {
+	background-color: #ccc;
+	cursor: pointer;
+}
+.input-disabled {
+	pointer-events:none;
+}
+.wrap-line {
+	white-space: pre-line;
+}
+.date-picker-div {
+	padding-left: 0;
+	width: 205px;
+}

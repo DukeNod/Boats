@@ -1,0 +1,207 @@
+/* =========== Paragraphs ============ */
+
+
+
+.para {
+	/*position:relative;*/
+	margin: 0 0 18px;
+}
+	.para .paraAlignLeft p, .para .paraAlignLeft h1, .para .paraAlignLeft h2, .para .paraAlignLeft h3, .para .paraAlignLeft h4, .para .paraAlignLeft h5, .para .paraAlignLeft h6, .para .paraAlignLeft ul {
+		text-align:left;
+	}
+	.para .paraAlignRight p, .para .paraAlignRight h1, .para .paraAlignRight h2, .para .paraAlignRight h3, .para .paraAlignRight h4, .para .paraAlignRight h5, .para .paraAlignRight h6, .para .paraAlignRight ul {
+		text-align:right;
+	}
+	.para .paraAlignCenter p, .para .paraAlignCenter h1, .para .paraAlignCenter h2, .para .paraAlignCenter h3, .para .paraAlignCenter h4, .para .paraAlignCenter h5, .para .paraAlignCenter h6, .para .paraAlignCenter ul {
+		text-align:center;
+	}
+	.para .paraAlignJustify p, .para .paraAlignJustify h1, .para .paraAlignJustify h2, .para .paraAlignJustify h3, .para .paraAlignJustify h4, .para .paraAlignJustify h5, .para .paraAlignJustify h6, .para .paraAlignJustify ul {
+		text-align:justify;
+	}
+	
+	.para .paraFloatAboveCenter .paraPict, .para .paraFloatBelowCenter .paraPict {
+		margin-bottom:1.25em; /*15px*/
+		/*clear:both;*/
+		text-align:center;
+	}
+	.para .paraFloatAboveLeft .paraPict, .para .paraFloatBelowLeft .paraPict {
+		margin-bottom:1.25em; /*15px*/
+		/*clear:both;*/
+		text-align:left;
+	}
+	.para .paraFloatAboveRight .paraPict, .para .paraFloatBelowRight .paraPict {
+		margin-bottom:1.25em; /*15px*/
+		/*clear:both;*/
+		text-align:right;
+	}
+	
+	.para .paraClearLeft {
+		clear:left;
+	}
+	.para .paraClearRight {
+		clear:right;
+	}
+	.para .paraClearBoth {
+		clear:both;
+	}
+	.para .paraClearNone, .para .paraClearUnknown {
+		clear:none;
+	}
+
+	.para .paraPict {
+		/* margin:8px 41px 25px 5px; */
+	}
+	
+	.para .paraPict .paraPictImage {
+		border:7px #ebeee0 solid;
+
+		-webkit-box-shadow: 1px 2px 4px 0px #a18353;
+		-moz-box-shadow: 1px 2px 4px 0px #a18353;
+		box-shadow:  1px 2px 4px 0px #a18353;
+
+		behavior: url(css/PIE.htc);
+		position:relative;
+		margin-right: 12px;
+	}
+	
+	.para .paraFloatTableLeft {
+	}
+		.para .paraFloatTableLeft p, .para .paraFloatTableLeft ul, .para .paraFloatTableLeft h1, .para .paraFloatTableLeft h2, .para .paraFloatTableLeft h3, .para .paraFloatTableLeft h4, .para .paraFloatTableLeft h5, .para .paraFloatTableLeft h6 {
+			display: table;
+		}
+		.para .paraFloatTableLeft .paraPict {
+			float:left;
+			margin-right:15px;
+		}
+	.para .paraFloatTableRight {
+	}
+		.para .paraFloatTableRight p, .para .paraFloatTableRight ul, .para .paraFloatTableRight h1, .para .paraFloatTableRight h2, .para .paraFloatTableRight h3, .para .paraFloatTableRight h4, .para .paraFloatTableRight h5, .para .paraFloatTableRight h6 {
+			display: table;
+		}
+		.para .paraFloatTableRight .paraPict {
+			float:right;
+			margin-left:15px;
+		}
+	
+	.para .paraFloatFloatLeft {
+	}
+		.para .paraFloatFloatLeft .paraPict {
+			float:left;
+			margin-right:15px;
+		}
+	.para .paraFloatFloatRight {
+	}
+		.para .paraFloatFloatRight .paraPict {
+			float:right;
+			margin-left:15px;
+		}
+
+	.para p {
+		margin-bottom:1.25em; /*15px*/
+	}
+
+	.para table {
+		margin: 6px 0 0;
+		width: 100%;
+	}
+		.para table th {
+		padding: 3px 6px;
+		color:#000000;
+		font-weight:bold;
+		vertical-align:middle;
+		background: #ECE7CB;
+		border:2px solid #FFFFFF;
+		text-align:center;
+	
+		}
+
+		.para table td {
+			color:#000000;
+			font-weight:normal;
+			vertical-align:middle;
+			text-align:center;
+			border: 2px solid #FFFFFF;
+			padding: 3px 6px;
+		}
+
+		.para table .a td {
+			background: #FAF6E3;
+		}
+		.para table .b td {
+			background: #ECE7CB;
+		}
+		.para table tr td:first-child {
+			text-align:left;
+		}
+		.para table .b td:first {
+			text-align:left;
+		}
+	
+	.para ul, .para ol {
+		margin-left:15px;
+		margin-bottom:15px;
+		list-style:outside square;
+	}
+
+
+
+		.para ul ul, .para ol ol {
+			margin-left:25px;
+			list-style:inside none;
+		}
+		.para ul ul ul, .para ol ol ol {
+			margin-left:25px;
+			list-style:inside none;
+		}
+	.para ul li {
+
+	}
+		.para ul li ul li {
+			padding-left:10px;
+			background:url(../images/fon_li.gif) no-repeat 0 7px;
+		}
+			.para ul li ul li ul li {
+				padding-left:10px;
+				background:url(../images/mark-square-fill.gif) no-repeat 0 7px;
+			}
+	.para ol {
+		list-style:decimal;
+		list-style-position: outside;
+		margin-left:0px;
+	}
+		.para ol li {
+			margin-left:20px;
+			list-style-position: outside;
+		}
+			.para ol li ol li {
+				margin-left:15px;
+				list-style-position: outside;
+			}
+				.para ol li ol li ol li {
+					margin-left:15px;
+					list-style-position: outside;
+				}
+				
+	.para h1, .para h2, .para h3, .para h4, .para h5, .para h6 {
+		margin-bottom:10px;
+	}
+	
+	.para h1 {
+
+}
+.para h2 {
+	font:20px 'robotolight', verdana;
+line-height:20px;
+	line-height:18px;
+	margin: 0 0 8px 0;
+}
+.para h3 {
+	font-weight:bold;
+}
+
+	.para h4 {
+font:20px 'robotolight', verdana;
+line-height:20px;
+margin-bottom:13px;
+color:#7c3f17;
+	}

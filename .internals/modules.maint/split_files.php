@@ -1,0 +1,56 @@
+<?php
+//
+// Расчленение папок с постоянно сохраняемыми файлами (только linked-сущности) на подпапки по типу и ид аплинка.
+//
+// Разовая операция.
+//
+
+_main_::depend('uploads');
+
+//NB: Со слешами на конце. Автоправки не делаем. Это quick-script, в конце концов.
+split_flat_in_presistent_folder(_config_::$dir_for_linked . 'picts/small/'  , convert_dat_to_hash(_main_::query(null, "select distinctrow `uplink_type`, `uplink_id`, `small_file`   as `filename` from `linked_picts` where `small_file`   is not null")));
+split_flat_in_presistent_folder(_config_::$dir_for_linked . 'picts/large/'  , convert_dat_to_hash(_main_::query(null, "select distinctrow `uplink_type`, `uplink_id`, `large_file`   as `filename` from `linked_picts` where `large_file`   is not null")));
+split_flat_in_presistent_folder(_config_::$dir_for_linked . 'paras/small/'  , convert_dat_to_hash(_main_::query(null, "select distinctrow `uplink_type`, `uplink_id`, `small_file`   as `filename` from `linked_paras` where `small_file`   is not null")));
+split_flat_in_presistent_folder(_config_::$dir_for_linked . 'paras/large/'  , convert_dat_to_hash(_main_::query(null, "select distinctrow `uplink_type`, `uplink_id`, `large_file`   as `filename` from `linked_paras` where `large_file`   is not null")));
+split_flat_in_presistent_folder(_config_::$dir_for_linked . 'files/attach/' , convert_dat_to_hash(_main_::query(null, "select distinctrow `uplink_type`, `uplink_id`, `attach_file`  as `filename` from `linked_files` where `attach_file`  is not null")));
+split_flat_in_presistent_folder(_config_::$dir_for_linked . 'files/preview/', convert_dat_to_hash(_main_::query(null, "select distinctrow `uplink_type`, `uplink_id`, `preview_file` as `filename` from `linked_files` where `preview_file` is not null")));
+
+// В случае "тихого" режима не генериуем отчёт.
+if (in_array('silent', $pathargs)) throw new exception_exit();
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Функция для генерации отображения файловых имён, как она используется в разделителе.
+function convert_dat_to_hash ($dat)
+{
+	$filenames = array();
+	foreach ($dat as $row)
+		$filenames[
+			(isset($row['uplink_type']) ? $row['uplink_type'] . '/' : '') .
+			(isset($row['uplink_id'  ]) ? $row['uplink_id'  ] . '/' : '') .
+			$row['filename']] = $row['filename'];
+	return $filenames;
+}
+
+// Объявление функции чистики одного указанного каталога.
+// Выносить в depend() нет смысла, так как она актуальна ТОЛЬКО на этой странице.
+function split_flat_in_presistent_folder ($directory, $filenames)
+{
+	// Тут без рекурсивных обоходов, можно обойтись и простым циклом по отображению.
+	foreach ($filenames as $target => $filename)
+	{
+		// Чтоб не вываливаться.
+		set_time_limit(30);
+
+		//
+		$filepath = $directory . $filename;
+		if (is_file($filepath))
+		{
+			var_dump("COPY: " . $filepath . ' TO ' . $directory . $target);
+			if (!is_dir(dirname($directory . $target))) mkdirr(dirname($directory . $target));
+			copy($filepath, $directory . $target);
+		}
+	}
+}
+
+?>

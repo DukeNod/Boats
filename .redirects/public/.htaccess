@@ -1,0 +1,2 @@
+#RewriteEngine On
+#RewriteRule	^alt([0-9])/(.*)	$2?alt=$1	[NC,L,QSA]
